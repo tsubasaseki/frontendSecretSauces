@@ -1,25 +1,28 @@
 {
-  "name": "frontendTools",
-  "version": "0.1",
+  "name": "frontendsecretsauces",
+  "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "private": true,
-  "description": "Project to study frontend development tools",
-  "author": "klim <klim0824@live.jp> (https://github.com/klim0824/)",
-  "homepage": "https://github.com/klim0824/frontendTools",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/klim0824/frontendTools.git"
+    "url": "git+https://github.com/tsubasaseki/frontendSecretSauces.git"
   },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tsubasaseki/frontendSecretSauces/issues"
+  },
+  "homepage": "https://github.com/tsubasaseki/frontendSecretSauces#readme",
   "devDependencies": {
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "browser-sync": "^2.24.7",
-    "gulp": "^4.0.0",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
     "gulp-sass": "^4.0.2"
-  },
-  "babel": {
-    "presets": [
-      "env"
-    ]
   }
 }
