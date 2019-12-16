@@ -7,6 +7,10 @@ import minifyCss from 'gulp-minify-css';
 import babel from 'gulp-babel';
 import browserSync from 'browser-sync';
 
+import postcss from 'gulp-postcss';
+import autoprefixer from 'autoprefixer';
+import cssDeclarationSorter from 'css-declaration-sorter';
+
 import webpackStream from 'webpack-stream';
 import webpack from 'webpack';
 
@@ -32,10 +36,27 @@ const path = {
 };
 
 const style = () => {
+    const plugin = [
+        autoprefixer({
+            browsers: [
+                'last 2 versions'
+            ]
+        }),
+        cssDeclarationSorter({
+            order: 'smacss'
+        })
+    ];
+
     return gulp.src(path.styles.src)
         .pipe(sourcemaps.init())
-        .pipe(sass()) // DON'T use sass option {outputStyle: 'compressed'} the reason is that the map is slip
+        .pipe(sass({outputStyle: 'expanded'})) // DON'T use sass option {outputStyle: 'compressed'} the reason is that the map is slip
         .pipe(gulp.dest(path.styles.dest))
+        .pipe(postcss(plugin))
+        .pipe(rename({extname:'.pre.css'}))
+        .pipe(gulp.dest(path.styles.dest))
+        .pipe(rename(function (path) {
+            path.basename = path.basename.replace(/\.pre$/, '');
+        }))
         .pipe(minifyCss({advanced:false}))
         .pipe(sourcemaps.write(mapDir))
         .pipe(rename({extname:'.min.css'}))

@@ -3,6 +3,6 @@ p {
 }
 
 .hoge .fuga {
-  border: red 1px;
   display: block;
+  border: red 1px;
 }
