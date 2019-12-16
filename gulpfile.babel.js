@@ -29,7 +29,11 @@ const path = {
         src: `${srcDir}/scss/**/*.scss`,
         dest: `${rootDir}/assets/css`
     },
-    javascripts: {
+    es6: {
+        src: `${srcDir}/es6/**/*.es6`,
+        dest: `${rootDir}/assets/js`
+    },
+    mjs: {
         src: `${srcDir}/mjs/**/*.mjs`,
         dest: `${rootDir}/assets/js`
     }
@@ -62,14 +66,24 @@ const style = () => {
         .pipe(rename({extname:'.min.css'}))
         .pipe(gulp.dest(path.styles.dest))
 }
-const javascript = () => {
+const es6 = () => {
+    return gulp.src(path.es6.src)
+        .pipe(babel())
+        .pipe(gulp.dest(path.es6.dest))
+        // .webpackStream(webpackConfig, webpack)
+        // .pipe(uglify())
+        // .pipe(rename({extname:'.min.js'}))
+        // .pipe(gulp.dest(path.mjs.dest))
+}
+
+const mjs = () => {
     return webpackStream(webpackConfig, webpack)
-        //gulp.src(path.javascripts.src)
+        //gulp.src(path.mjs.src)
         //.pipe(babel())
-        .pipe(gulp.dest(path.javascripts.dest))
+        .pipe(gulp.dest(path.mjs.dest))
         .pipe(uglify())
         .pipe(rename({extname:'.min.js'}))
-        .pipe(gulp.dest(path.javascripts.dest))
+        .pipe(gulp.dest(path.mjs.dest))
 }
 
 const server = browserSync.create();
@@ -88,11 +102,13 @@ const serve = (done) => {
 
 const watch = () => {
     gulp.watch(path.styles.src, style)
-    gulp.watch(path.javascripts.src, javascript)
+    gulp.watch(path.es6.src, es6)
+    gulp.watch(path.mjs.src, mjs)
     gulp.watch([
         path.html,
         path.styles.dest + '/*.css',
-        path.javascripts.dest + '/*.js'
+        `${path.es6.dest}/*.js`,
+        path.mjs.dest + '/*.js'
     ], reload)
 };
 
